@@ -1,0 +1,24 @@
+# started on Mon Dec  2 12:10:00 2024
+
+
+ Performance counter stats for './target/release/day1' (1000 runs):
+
+              0.41 msec task-clock:u                     #    0.734 CPUs utilized               ( +-  0.67% )
+                 0      context-switches:u               #    0.000 /sec                      
+                 0      cpu-migrations:u                 #    0.000 /sec                      
+                76      page-faults:u                    #  187.144 K/sec                       ( +-  0.06% )
+     <not counted>      cpu_atom/cycles/u                                                       ( +-  5.41% )  (0.00%)
+           812,253      cpu_core/cycles/u                #    2.000 GHz                         ( +-  1.81% )
+     <not counted>      cpu_atom/instructions/u                                                 ( +-  5.33% )  (0.00%)
+         2,509,509      cpu_core/instructions/u          #    9.94  insn per cycle              ( +-  1.93% )
+     <not counted>      cpu_atom/branches/u                                                     ( +-  5.28% )  (0.00%)
+           424,336      cpu_core/branches/u              #    1.045 G/sec                       ( +-  1.88% )
+     <not counted>      cpu_atom/branch-misses/u                                                ( +-  5.00% )  (0.00%)
+             4,389      cpu_core/branch-misses/u         #    3.21% of all branches             ( +-  1.78% )
+             TopdownL1 (cpu_core)                 #      7.7 %  tma_backend_bound      
+                                                  #      9.4 %  tma_bad_speculation    
+                                                  #     35.2 %  tma_frontend_bound     
+                                                  #     47.7 %  tma_retiring             ( +-  1.81% )
+
+        0.00055339 +- 0.00000346 seconds time elapsed  ( +-  0.63% )
+

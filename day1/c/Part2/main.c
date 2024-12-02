@@ -27,7 +27,7 @@ int main(void) {
   int input[ROWS][COLS] = {0};
   int i = 0;
 
-  file = fopen("../input.txt", "r");
+  file = fopen("../../input_donatien.txt", "r");
   if (file != NULL) {
     while (i < COLS && fscanf(file, "%d %d", &input[0][i], &input[1][i]) == 2) {
       i++;

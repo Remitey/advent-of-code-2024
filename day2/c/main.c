@@ -67,7 +67,7 @@ int main(void) {
   int *size = NULL;
   int num_rows = 0;
 
-  file = fopen("input.txt", "r");
+  file = fopen("../input.txt", "r");
   if (file != NULL) {
     while (fgets(line, sizeof(line), file)) {
       int count = 0;

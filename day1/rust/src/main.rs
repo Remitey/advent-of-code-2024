@@ -11,11 +11,11 @@ fn similarityfn(col1: &Vec<i32>, col2: &Vec<i32>) -> i32 {
                 counter += 1;
             }
         }
-        similarity += element*counter;
+        similarity += element * counter;
         counter = 0;
     }
 
-    return similarity;
+    similarity
 }
 
 fn main() -> io::Result<()> {
