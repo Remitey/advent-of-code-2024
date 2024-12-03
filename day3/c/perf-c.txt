@@ -1,0 +1,24 @@
+# started on Tue Dec  3 12:15:30 2024
+
+
+ Performance counter stats for './main.out' (1000 runs):
+
+              0.33 msec task-clock:u                     #    0.734 CPUs utilized               ( +-  0.47% )
+                 0      context-switches:u               #    0.000 /sec                      
+                 0      cpu-migrations:u                 #    0.000 /sec                      
+                60      page-faults:u                    #  180.305 K/sec                       ( +-  0.06% )
+     <not counted>      cpu_atom/cycles/u                                                       ( +- 10.77% )  (0.00%)
+         1,073,020      cpu_core/cycles/u                #    3.225 GHz                         ( +-  0.91% )
+     <not counted>      cpu_atom/instructions/u                                                 ( +- 10.63% )  (0.00%)
+         4,133,169      cpu_core/instructions/u          #   41.13  insn per cycle              ( +-  0.93% )
+     <not counted>      cpu_atom/branches/u                                                     ( +- 10.60% )  (0.00%)
+           432,759      cpu_core/branches/u              #    1.300 G/sec                       ( +-  0.92% )
+     <not counted>      cpu_atom/branch-misses/u                                                ( +- 10.50% )  (0.00%)
+             4,336      cpu_core/branch-misses/u         #   11.53% of all branches             ( +-  0.95% )
+             TopdownL1 (cpu_core)                 #     14.2 %  tma_backend_bound      
+                                                  #      8.8 %  tma_bad_speculation    
+                                                  #     15.4 %  tma_frontend_bound     
+                                                  #     61.7 %  tma_retiring             ( +-  0.92% )
+
+        0.00045359 +- 0.00000200 seconds time elapsed  ( +-  0.44% )
+
