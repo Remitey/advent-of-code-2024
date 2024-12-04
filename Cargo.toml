@@ -1,3 +1,7 @@
 [workspace]
 resolver = "2"
-members = ["day1/rust","day2/rust"]
+members = ["day1/rust","day2/rust", "day3/rust"]
+
+[workspace.dependencies]
+regex="1.11.1"
+
