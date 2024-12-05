@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define A 'A'
 #define M 'M'
 #define S 'S'
+#define NUMBER_DIRECTION 4
 
 typedef struct {
   int dx;
@@ -18,11 +20,11 @@ int is_valid(int i, int j, int num_rows, int num_cols) {
 }
 
 int check_xmas(char **data, int i, int j) {
-    int *ni = (int *)malloc(4*sizeof(int));
-    int *nj = (int *)malloc(4*sizeof(int));
+    int *ni = (int *)malloc(NUMBER_DIRECTION*sizeof(int));
+    int *nj = (int *)malloc(NUMBER_DIRECTION*sizeof(int));
 
     
-    for (int k = 0; k < 4; k++) {
+    for (int k = 0; k < NUMBER_DIRECTION; k++) {
   
         ni[k] = i + directions[k].dx;
         nj[k] = j + directions[k].dy;
@@ -46,7 +48,7 @@ int find_XMAS(char **data, int num_rows, int num_cols) {
 
     for (int i = 1; i < num_rows - 1; i++) {
         for (int j = 1; j < num_cols - 1; j++) {
-            if (data[i][j] == 'A' && is_valid(i, j, num_rows, num_cols)) {
+            if (data[i][j] == A && is_valid(i, j, num_rows, num_cols)) {
                 xmas += check_xmas(data, i, j);
             }
         }
