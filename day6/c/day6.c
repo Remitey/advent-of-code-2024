@@ -10,7 +10,7 @@ typedef struct {
   int dy;
 } directions;
 
-directions Direction[4] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+directions Direction[4] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
 void find_initial_position(char **map, int num_rows, int num_cols, int *x,
                            int *y) {
@@ -28,8 +28,9 @@ void find_initial_position(char **map, int num_rows, int num_cols, int *x,
 
 int guard_path(char **map, int num_rows, int num_cols) {
   int x, y, next_x, next_y;
-  int index_direction = 3;
+  int index_direction = 0;
   int add_guard_position = 0;
+  int add_block = 0;
 
   bool **visited = (bool **)malloc(num_rows * sizeof(bool *));
   for (int i = 0; i < num_rows; i++) {
@@ -54,6 +55,97 @@ int guard_path(char **map, int num_rows, int num_cols) {
     if (map[next_x][next_y] == WALL) {
 
       index_direction = (index_direction + 1) % 4;
+      int x_1 = x + Direction[index_direction].dx;
+      int y_1 = y + Direction[index_direction].dy;
+
+      switch (index_direction) {
+      case 1:
+        for (int i = x; i < num_cols; i++) {
+
+          x_1 = x_1 + Direction[index_direction].dx;
+          y_1 = y_1 + Direction[index_direction].dy;
+
+          if (map[x_1][y_1] == WALL) {
+
+            int x_2 = x_1;
+            int y_2 = y_1 - 1;
+            for (int j = x_1; j < num_rows - 1; j++) {
+
+              x_2 = x_2 + Direction[(index_direction + 1) % 4].dx;
+              y_2 = y_2 + Direction[(index_direction + 1) % 4].dy;
+              if (map[x_2][y_2] == WALL) {
+
+                add_block++;
+              }
+            }
+          }
+        }
+        break;
+      case 2:
+        for (int j = x_1; j < num_rows - 1; j++) {
+
+          x_1 = x_1 + Direction[index_direction].dx;
+          y_1 = y_1 + Direction[index_direction].dy;
+
+          if (map[x_1][y_1] == WALL) {
+            int x_2 = x_1 - 1;
+            int y_2 = y_1;
+            for (int i = x_1; i >= 0; i--) {
+              x_2 = x_2 + Direction[(index_direction + 1) % 4].dx;
+              y_2 = y_2 + Direction[(index_direction + 1) % 4].dy;
+              if (map[x_2][y_2] == WALL) {
+                add_block++;
+              }
+            }
+          }
+        }
+
+        break;
+      case 3:
+
+        for (int i = x_1; i >= 0; i--) {
+
+          x_1 = x_1 + Direction[index_direction].dx;
+          y_1 = y_1 + Direction[index_direction].dy;
+
+          if (map[x_1][y_1] == WALL) {
+            int x_2 = x_1;
+            int y_2 = y_1 + 1;
+            for (int j = y_1; j >= 0; j--) {
+              x_2 = x_2 + Direction[(index_direction + 1) % 4].dx;
+              y_2 = y_2 + Direction[(index_direction + 1) % 4].dy;
+              if (map[x_2][y_2] == WALL) {
+
+                add_block++;
+              }
+            }
+          }
+        }
+        break;
+      case 0:
+        for (int j = y_1; j >= 0; j--) {
+
+          x_1 = x_1 + Direction[index_direction].dx;
+          y_1 = y_1 + Direction[index_direction].dy;
+
+          if (map[x_1][y_1] == WALL) {
+            int x_2 = x_1 + 1;
+            int y_2 = y_1;
+            for (int i = x; i < num_cols; i++) {
+
+              x_2 = x_2 + Direction[(index_direction + 1) % 4].dx;
+              y_2 = y_2 + Direction[(index_direction + 1) % 4].dy;
+              if (map[x_2][y_2] == WALL) {
+                add_block++;
+              }
+            }
+          }
+        }
+        break;
+      default:
+        break;
+      }
+
     } else {
 
       x = next_x;
@@ -65,9 +157,10 @@ int guard_path(char **map, int num_rows, int num_cols) {
       }
     }
 
-    printf("Position actuelle : (%d, %d), direction : %d\n", x, y,
-           index_direction);
+    // printf("Position actuelle : (%d, %d), direction : %d\n", x, y,
+    //        index_direction);
   }
+  printf("Circle :%d\n", add_block);
 
   for (int i = 0; i < num_rows; i++) {
     free(visited[i]);
