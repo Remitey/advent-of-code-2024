@@ -7,31 +7,37 @@
 #define WALL '#'
 #define EMPTY '.'
 
-typedef struct {
-    int dx,dy;
+typedef struct
+{
+    int dx, dy;
 } directions;
 
 directions Direction[4] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
-typedef struct {
+typedef struct
+{
     int x, y, direction;
 } state;
 
-void find_initial_position(char **map, int num_rows, int num_cols, int *x, int *y) {
-    for (int i = 0; i < num_rows; i++) {
-        for (int j = 0; j < num_cols; j++) {
-            if (map[i][j] == TARGET) {
+void find_initial_position(char **map, int num_rows, int num_cols, int *x, int *y)
+{
+    for (int i = 0; i < num_rows; i++)
+    {
+        for (int j = 0; j < num_cols; j++)
+        {
+            if (map[i][j] == TARGET)
+            {
                 *x = i;
                 *y = j;
                 return;
             }
         }
     }
-    printf("Erreur : cible non trouvée dans la carte.\n");
-    exit(1);
+    printf("Guard not find\n");
 }
 
-bool simulate_guard(char **map, int num_rows, int num_cols, int start_x, int start_y, int obstacle_x, int obstacle_y) {
+bool guard_path(char **map, int num_rows, int num_cols, int start_x, int start_y, int obstacle_x, int obstacle_y)
+{
     int x = start_x, y = start_y, direction = 0;
     state visited[10000];
     int visited_count = 0;
@@ -39,10 +45,13 @@ bool simulate_guard(char **map, int num_rows, int num_cols, int start_x, int sta
     char original = map[obstacle_x][obstacle_y];
     map[obstacle_x][obstacle_y] = WALL;
 
-    while (true) {
-        for (int i = 0; i < visited_count; i++) {
-            if (visited[i].x == x && visited[i].y == y && visited[i].direction == direction) {
-                map[obstacle_x][obstacle_y] = original; 
+    while (true)
+    {
+        for (int i = 0; i < visited_count; i++)
+        {
+            if (visited[i].x == x && visited[i].y == y && visited[i].direction == direction)
+            {
+                map[obstacle_x][obstacle_y] = original;
                 return true;
             }
         }
@@ -52,13 +61,17 @@ bool simulate_guard(char **map, int num_rows, int num_cols, int start_x, int sta
         int next_x = x + Direction[direction].dx;
         int next_y = y + Direction[direction].dy;
 
-        if (next_x < 0 || next_x >= num_rows || next_y < 0 || next_y >= num_cols) {
-            break; 
+        if (next_x < 0 || next_x >= num_rows || next_y < 0 || next_y >= num_cols)
+        {
+            break;
         }
 
-        if (map[next_x][next_y] == WALL) {
-            direction = (direction + 1) % 4; 
-        } else {
+        if (map[next_x][next_y] == WALL)
+        {
+            direction = (direction + 1) % 4;
+        }
+        else
+        {
             x = next_x;
             y = next_y;
         }
@@ -68,19 +81,24 @@ bool simulate_guard(char **map, int num_rows, int num_cols, int start_x, int sta
     return false;
 }
 
-int count_obstruction_positions(char **map, int num_rows, int num_cols) {
+int count_obstruction_positions(char **map, int num_rows, int num_cols)
+{
     int start_x, start_y;
     find_initial_position(map, num_rows, num_cols, &start_x, &start_y);
 
     int count = 0;
 
-    for (int i = 0; i < num_rows; i++) {
-        for (int j = 0; j < num_cols; j++) {
-            if (map[i][j] != EMPTY || (i == start_x && j == start_y)) {
+    for (int i = 0; i < num_rows; i++)
+    {
+        for (int j = 0; j < num_cols; j++)
+        {
+            if (map[i][j] != EMPTY || (i == start_x && j == start_y))
+            {
                 continue;
             }
 
-            if (simulate_guard(map, num_rows, num_cols, start_x, start_y, i, j)) {
+            if (guard_path(map, num_rows, num_cols, start_x, start_y, i, j))
+            {
                 count++;
             }
         }
@@ -89,9 +107,11 @@ int count_obstruction_positions(char **map, int num_rows, int num_cols) {
     return count;
 }
 
-int main() {
+int main()
+{
     FILE *file = fopen("../input.txt", "r");
-    if (!file) {
+    if (!file)
+    {
         printf("Erreur : impossible d'ouvrir le fichier.\n");
         return 1;
     }
@@ -101,8 +121,9 @@ int main() {
     int num_cols = 0;
     char **map = NULL;
 
-    while (fgets(line, sizeof(line), file)) {
-        line[strcspn(line, "\n")] = '\0'; 
+    while (fgets(line, sizeof(line), file))
+    {
+        line[strcspn(line, "\n")] = '\0';
         num_cols = strlen(line);
         map = (char **)realloc(map, (num_rows + 1) * sizeof(char *));
         map[num_rows] = strdup(line);
@@ -113,7 +134,8 @@ int main() {
     int result = count_obstruction_positions(map, num_rows, num_cols);
     printf("Nombre de positions possibles pour créer une boucle : %d\n", result);
 
-    for (int i = 0; i < num_rows; i++) {
+    for (int i = 0; i < num_rows; i++)
+    {
         free(map[i]);
     }
     free(map);
