@@ -112,7 +112,7 @@ int main()
     FILE *file = fopen("../input.txt", "r");
     if (!file)
     {
-        printf("Erreur : impossible d'ouvrir le fichier.\n");
+        printf("Error file\n");
         return 1;
     }
 
@@ -132,7 +132,7 @@ int main()
     fclose(file);
 
     int result = count_obstruction_positions(map, num_rows, num_cols);
-    printf("Nombre de positions possibles pour créer une boucle : %d\n", result);
+    printf("Circle : %d\n", result);
 
     for (int i = 0; i < num_rows; i++)
     {
